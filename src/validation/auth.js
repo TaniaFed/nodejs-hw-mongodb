@@ -7,13 +7,11 @@ export const registerUserSchema = Joi.object({
         'string.max': 'Username should have at most {#limit} characters',
         'any.required': 'Username is required',
     }),
-    email: Joi.string().email({
-        minDomainSegments: 2, tlds: {allow: ['com', 'net']}
-    }).required().messages({
+    email: Joi.string().email().required().messages({
         'string.base': 'Email should be a string',
         'any.required': 'Email is required',
     }),
-    password: Joi.string().min(8).required().messages({
+    password: Joi.string().min(4).required().messages({
         'string.base': 'Password should be valid',
         'string.min': 'Password should have at least {#limit} characters',
         'any.required': 'Password is required',
@@ -21,13 +19,11 @@ export const registerUserSchema = Joi.object({
 });
 
 export const loginUserSchema = Joi.object({
-    email: Joi.string().email({
-        minDomainSegments: 2, tlds: {allow: ['com', 'net', 'ua']}
-    }).required().messages({
+    email: Joi.string().email().required().messages({
         'string.base': 'Email should be a string',
         'any.required': 'Email is required',
     }),
-    password: Joi.string().min(8).required().messages({
+    password: Joi.string().min(4).required().messages({
         'string.base': 'Password should be valid',
         'string.min': 'Password should have at least {#limit} characters',
         'any.required': 'Password is required',

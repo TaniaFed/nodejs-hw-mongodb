@@ -1,40 +1,42 @@
-import createHttpError from "http-errors";
+// //Checks roles if more than one
 
-import { ContactsCollection } from "../db/models/contact.js";
-import { ROLES } from "../constants/index.js";
+// import createHttpError from "http-errors";
 
-export const checkRoles = (...roles) => async (req, res, next) => {
-    const { user } = req;
+// import { ContactsCollection } from "../db/models/contact.js";
+// import { ROLES } from "../constants/index.js";
 
-    if (!user) {
-        next(createHttpError(401, 'User not authenticated'));
-        return;
-    }
+// export const checkRoles = (...roles) => async (req, res, next) => {
+//     const { user } = req;
 
-    const { role } = user;
+//     if (!user) {
+//         next(createHttpError(401, 'User not authenticated'));
+//         return;
+//     }
 
-    if (roles.includes(ROLES.ADMIN) && role === ROLES.ADMIN) {
-        next();
-        return;
-    }
+//     const { role } = user;
 
-    if (roles.includes(ROLES.USER) && role === ROLES.USER) {
-        const { contactId } = req.params;
+//     if (roles.includes(ROLES.ADMIN) && role === ROLES.ADMIN) {
+//         next();
+//         return;
+//     }
 
-        if (!contactId) {
-            next(createHttpError(403, 'Contact ID is required for user'));
-            return;
-        }
-    const contact = await ContactsCollection.findOne({
-        _id: contactId,
-        userId: user._id,
-      });
+//     if (roles.includes(ROLES.USER) && role === ROLES.USER) {
+//         const { contactId } = req.params;
 
-    if (contact) {
-        next();
-        return;
-        }
-    }
+//         if (!contactId) {
+//             next(createHttpError(403, 'Contact ID is required for user'));
+//             return;
+//         }
+//     const contact = await ContactsCollection.findOne({
+//         _id: contactId,
+//         userId: user._id,
+//       });
 
-    next(createHttpError(403, 'Access denied'));
-};
+//     if (contact) {
+//         next();
+//         return;
+//         }
+//     }
+
+//     next(createHttpError(403, 'Access denied'));
+// };

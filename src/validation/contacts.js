@@ -13,15 +13,13 @@ export const createContactSchema = Joi.object({
         'string.max': 'Phone number should be {#limit} numbers and start with '+'',
         'any.required': 'Phone number is required',
       }),
-    email: Joi.string().email({
-        minDomainSegments: 2, tlds: {allow: ['com', 'net', 'ua']}
-    }).messages({
+    email: Joi.string().email().messages({
         'string.base': 'Email should be a string',
         'any.required': 'Email is required',
       }),
     isFavourite: Joi.boolean(),
-  contactType: Joi.string().valid('work', 'home', 'personal').required(),
-  userId: Joi.string().custom((value, helper) => {
+    contactType: Joi.string().valid('work', 'home', 'personal').required(),
+    userId: Joi.string().custom((value, helper) => {
     if (value && !isValidObjectId(value)) {
       return helper.message('User id should be a valid Mongo id');
     }
@@ -38,11 +36,15 @@ export const updateContactSchema = Joi.object({
     phoneNumber: Joi.string().min(12).max(13).messages({
         'string.max': 'Phone number should be {#limit} numbers and start with '+'',
       }),
-    email: Joi.string().email({
-        minDomainSegments: 2, tlds: {allow: ['com', 'net']}
-    }).messages({
+    email: Joi.string().email().messages({
         'string.base': 'Email should be a string',
       }),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().valid('work', 'home', 'personal'),
+    userId: Joi.string().custom((value, helper) => {
+      if (value && !isValidObjectId(value)) {
+        return helper.message('User id should be a valid Mongo id');
+      }
+      return true;
+    }),
 });
