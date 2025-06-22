@@ -2,7 +2,7 @@ tags:
   - Contacts
 summary: Delete contact by id
 operationId: deleteContact
-description: 'Delete student by id'
+description: 'Delete contact by id'
 security:
   - bearerAuth: []
 parameters:
