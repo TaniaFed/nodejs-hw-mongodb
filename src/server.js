@@ -1,3 +1,5 @@
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
+
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
@@ -14,6 +16,9 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 
 export const setupServer = () => {
   const app = express();
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
+  app.use('/api-docs', swaggerDocs());
 
   app.use(
     express.json({
